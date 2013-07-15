@@ -43,6 +43,11 @@ task wrapper(type: Wrapper) {
 
 task jshintz(dependsOn: 'init', description: 'runs jshint on all non-test and lib JS files') {
 	doLast {
+		def headless = System.properties['java.awt.headless']
+    if (headless == 'true') {
+     	  systemProperties 'java.awt.headless': "true"
+    }
+
 		def command = "jshint ${new File('stacktrace.js').canonicalPath} --config jshint.json --jslint-reporter"
 		new File("${buildDir}/jshint.xml").write(command.execute().text)
 	}
