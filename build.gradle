@@ -31,6 +31,10 @@ task init(type: Directory, dependsOn: 'clean', description: 'Creates artifact ou
 	doLast {
 		file(buildDir).mkdirs()
 	}
+	def headless = System.properties['java.awt.headless']
+    if (headless == 'true') {
+        systemProperties 'java.awt.headless': "true"
+    }
 }
 
 task wrapper(type: Wrapper) {
